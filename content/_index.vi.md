@@ -25,7 +25,7 @@ chapter: false
 
 &emsp; **Thời gian thực tập:** Từ ngày 04/05/2026 đến ngày 25/07/2026
 
-![alt text](avatar.png)
+![alt text](./avatar.png)
 
 
 
@@ -39,4 +39,3 @@ chapter: false
 6.  [Tự đánh giá](6-Self-evaluation/)
 7.  [Chia sẻ, đóng góp ý kiến](7-Feedback/)
 
-![Avatar](./avatar.png)
