@@ -5,27 +5,39 @@ weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Secure Hybrid Access to S3 using VPC Endpoints
+# XÂY DỰNG HỆ THỐNG SMART HEALTHCARE APPOINTMENT SYSTEM TRÊN AWS
 
-#### Overview
+## Tổng quan workshop
 
-**AWS PrivateLink** provides private connectivity to AWS services from VPCs and your on-premises networks, without exposing your traffic to the Public Internet.
+Smart Healthcare Appointment System là dự án đặt lịch khám chữa bệnh và quản lý hồ sơ y tế dành cho bệnh nhân và cơ sở y tế. Trong hệ thống này, người dùng có thể đặt lịch và tải lên hồ sơ bệnh án từ giao diện web, backend tiếp nhận yêu cầu nghiệp vụ, Amazon S3 chịu trách nhiệm lưu trữ file, cơ sở dữ liệu lưu metadata, còn bác sĩ hoặc quản trị viên thực hiện kiểm duyệt lịch hẹn và hồ sơ trước khi xác nhận. Tài liệu này được viết theo dạng workshop end-to-end để người đọc có thể theo dõi trọn vẹn một vòng đời đặt lịch khám thay vì chỉ xem rời rạc từng dịch vụ AWS.
 
-In this lab, you will learn how to create, configure, and test VPC endpoints that enable your workloads to reach AWS services without traversing the Public Internet.
+Điểm trọng tâm của workshop là trình bày một luồng kỹ thuật hoàn chỉnh: chuẩn bị môi trường, upload hồ sơ bệnh án, xác nhận file đã được lưu đúng trên AWS, kiểm thử bước kiểm duyệt, đồng bộ dữ liệu hiển thị ra giao diện và cuối cùng là dọn dẹp tài nguyên để tránh phát sinh chi phí không cần thiết. Cách trình bày này giúp bài báo cáo thể hiện được cả phần thiết kế kiến trúc lẫn phần triển khai thực tế, kiểm thử và vận hành.
 
-You will create two types of endpoints to access Amazon S3: a Gateway VPC endpoint, and an Interface VPC endpoint. These two types of VPC endpoints offer different benefits depending on if you are accessing Amazon S3 from the cloud or your on-premises location
-+ **Gateway** - Create a gateway endpoint to send traffic to Amazon S3 or DynamoDB using private IP addresses.You route traffic from your VPC to the gateway endpoint using route tables.
-+ **Interface** - Create an interface endpoint to send traffic to endpoint services that use a Network Load Balancer to distribute traffic. Traffic destined for the endpoint service is resolved using DNS.
+## Mục tiêu
 
-#### Content
+Sau khi đọc xong mục này, người xem có thể:
 
-1. [Workshop overview](5.1-Workshop-overview)
-2. [Prerequiste](5.2-Prerequiste/)
-3. [Access S3 from VPC](5.3-S3-vpc/)
-4. [Access S3 from On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (Bonus)](5.5-Policy/)
-6. [Clean up](5.6-Cleanup/)
+* hiểu vai trò của từng thành phần trong hệ thống Smart Healthcare Appointment System,
+* theo dõi được luồng upload và phê duyệt lịch hẹn, hồ sơ y tế từ đầu đến cuối,
+* đối chiếu ảnh AWS Console với từng bước triển khai trong workshop,
+* xem code snippet đại diện cho phần tích hợp frontend và backend,
+* và nhận thấy nhóm có thực hiện cả monitoring, validation lẫn clean-up tài nguyên.
+
+## Kết quả mong đợi
+
+Kết quả cuối cùng của workshop là một hệ thống trong đó người dùng đặt lịch và tải hồ sơ lên thành công, quản trị viên hoặc bác sĩ duyệt lịch khám trong khu vực quản trị, lịch hẹn và hồ sơ đã duyệt xuất hiện tại trang tìm kiếm/quản lý, người dùng có thể xem trước hoặc tải xuống, đồng thời hệ thống được theo dõi bằng CloudWatch logs, metrics và alarm.
+
+## Video demo 🔗
+
+Người chấm có thể xem video demo Smart Healthcare Appointment System tại đây: [Video demo Smart Healthcare Appointment System](#).
+
+## Cấu trúc workshop
+
+1. Giới thiệu
+2. Điều kiện tiên quyết
+3. Triển khai luồng upload hồ sơ và lưu trữ y tế
+4. Kiểm thử hệ thống end-to-end
+5. Tích hợp ứng dụng khách và quan sát hệ thống
+6. Cập nhật dữ liệu
+7. Dọn dẹp tài nguyên
