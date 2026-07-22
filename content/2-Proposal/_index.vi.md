@@ -48,7 +48,7 @@ Mẫu chốt của giải pháp là sử dụng kiến trúc phân tầng kết 
 ## 3. Kiến trúc giải pháp
 Kiến trúc dưới đây mô tả định hướng triển khai Smart Healthcare Appointment System trên AWS với lớp phân phối nội dung, lớp VPC mạng an toàn, lớp ứng dụng, lớp dữ liệu và lớp giám sát vận hành:
 
-![alt text](/images/2-Proposal/sodo.jpg)
+![alt text](/images/2-Proposal/duan.jpg)
 
 **Mô tả các thành phần chính**
 

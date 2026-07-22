@@ -48,7 +48,7 @@ The core of the solution is a multi-tier architecture combined with asynchronous
 
 The architecture below illustrates the deployment direction of the Smart Healthcare Appointment System on AWS, featuring a content delivery layer, secure VPC network layer, application layer, data layer, and operations monitoring layer:
 
-![alt text](/images/2-Proposal/sodo.jpg)
+![alt text](/images/2-Proposal/duan.jpg)
 
 **Key Component Descriptions**
 

@@ -14,7 +14,7 @@ Mục này đưa sơ đồ kiến trúc vào ngay trong workshop để người 
 
 Sơ đồ dưới đây tóm tắt định hướng triển khai Smart Healthcare Appointment System được sử dụng xuyên suốt workshop:
 
-![alt text](/images/2-Proposal/sodo.jpg)
+![alt text](/images/2-Proposal/duan.jpg)
 
 ## Giải thích theo từng lớp
 
