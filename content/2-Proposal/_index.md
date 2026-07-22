@@ -5,111 +5,138 @@ weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
 
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+## Smart Healthcare Appointment System Deployment Proposal on AWS
 
-### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
+## 1. Executive Summary
 
-### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
+Smart Healthcare Appointment System is a platform designed to help patients book medical appointments, manage health records, and connect with healthcare facilities quickly and transparently. The core objective goes beyond a simple booking website; it builds a structured, highly secure digital health system capable of long-term scaling to handle high traffic during peak hours.
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+During my internship, I primarily focused on backend development and infrastructure, while also supporting the team in connecting the user interface with asynchronous processing systems and AWS services. Therefore, this proposal reflects both a product perspective and technical mindset, bridging an academic project into a production-ready cloud healthcare platform.
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+A key aspect of the system is avoiding a traditional monolithic architecture. Instead, the design cleanly separates layers into frontend, business logic, asynchronous message queues, and databases. This approach ensures high availability, patient data security, and stable operations.
 
-### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
+## 2. Problem Statement
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+In current medical environments, appointment scheduling and record management are often fragmented or manually operated, leading to several challenges:
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+* Patients spend long hours waiting at reception or experience system congestion during peak registration hours.
+* Appointment data and personal health information face risks of exposure if not strictly partitioned and protected.
+* Systems are prone to bottlenecks during sudden surges in traffic, disrupting healthcare services.
+* Difficulty in synchronizing appointment statuses between patients, doctors, and various hospital departments.
 
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
+**Current Issues**
 
-### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+If built as a simple monolithic model where all request traffic routes directly to a single server, the system would quickly crash under high concurrent user loads. Furthermore, a lack of asynchronous processing mechanisms or secure network zoning reduces scalability and healthcare data safety.
 
-### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
+Another issue is that many systems only solve basic data storage without optimizing for load capacity, real-time error monitoring, and industry-standard healthcare security compliance.
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+**Proposed Solution**
 
-### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
+The Smart Healthcare Appointment System is proposed with the following structure:
 
-### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
+* Frontend provides search, booking, health record management, and doctor information experiences.
+* Backend Node.js/Express handles business logic, authentication, authorization, and appointment coordination.
+* PostgreSQL stores appointment metadata, patient/doctor details, and medical statuses.
+* Amazon S3 stores medical records, test results, and healthcare images to offload the backend and fit object storage models.
+* Scaling services like CloudFront, SQS, CloudWatch, and SNS are introduced to boost performance, handle peak queues, monitor, and optimize costs.
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
+The core of the solution is a multi-tier architecture combined with asynchronous queues for peak appointment flows, while the backend focuses on metadata and healthcare business logic. This architecture suits a digital health platform experiencing continuous growth in data volume and concurrent users.
 
-Total: $0.7/month, $8.40/12 months
+## 3. Solution Architecture
 
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+The architecture below illustrates the deployment direction of the Smart Healthcare Appointment System on AWS, featuring a content delivery layer, secure VPC network layer, application layer, data layer, and operations monitoring layer:
 
-### 7. Risk Assessment
-#### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
+![alt text](/images/2-Proposal/sodo.jpg)
 
-#### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
+**Key Component Descriptions**
 
-#### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+* **Amazon Route 53, Amazon CloudFront, AWS WAF, and AWS Certificate Manager:** Act as the Global Edge Security & CDN layer, delivering static content, managing domains, automating SSL certificates, and mitigating web threats.
+* **Internet Gateway and Application Load Balancer:** Receive user requests, route traffic into Public Subnets, and distribute loads to the backend system.
+* **Amazon EC2 (in Private Subnet):** Runs the backend to process booking business logic, authentication, and healthcare data coordination.
+* **Amazon RDS PostgreSQL (Multi-AZ) and Amazon ElastiCache for Redis:** Store appointment metadata, patient info, accounts, medical statuses, and cache data to accelerate query performance.
+* **Amazon S3 (Upload):** Stores medical records, test results, and health imagery using Presigned URLs allowing direct client uploads.
+* **Event-Driven Execution Bus (SQS FIFO Queue, AWS Lambda, SNS & SES):** Asynchronously handles peak booking tasks, sends appointment notifications, and automates confirmation emails.
+* **Amazon CloudWatch:** Supports logging, monitoring, and automated alerting (CloudWatch Alarm) during system incidents or CPU overload.
 
-### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
-#### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+**Significance of the Architecture for Smart Healthcare Appointment System**
+
+This architecture demonstrates that the Smart Healthcare Appointment System is not just a basic web application, but a robust system featuring a security edge layer, content delivery, clearly separated VPC network tiers (Public/Private Subnets), large-scale async processing, and rigorous operations monitoring. This provides a solid foundation ensuring medical data safety, high load capacity, and real-world scalability.
+
+## 4. Technical Implementation
+
+During the internship, the team focused on feasible tasks aligned with the existing codebase:
+
+* Developed frontend interfaces for Home, Search, Appointment Booking, Patient Profile, and Admin Dashboard.
+* Designed simulated login workflows and role-based access for patients, doctors, and administrators.
+* Standardized appointment metadata structure for search, management, and coordination.
+* Prepared the upload workflow for medical records and health images using a presigned URL model.
+* Supported Express backend integration with PostgreSQL and S3 at a level appropriate for the demo.
+
+This also means not every component in the architecture diagram is 100% fully deployed yet. Services like SQS, CloudWatch, and SNS currently serve as logical scaling directions rather than fully finalized components. Presenting this clearly ensures the report remains honest regarding the actual scope.
+
+## 5. Roadmap and Milestones
+
+**Phase 1: Core Product Completion**
+
+* Stabilize search, booking, record preview, and user navigation experiences.
+* Standardize metadata and appointment approval workflows.
+* Complete the admin dashboard and basic analytics.
+
+**Phase 2: Real Cloud Integration**
+
+* Establish stable connections between frontend, Express backend, and PostgreSQL.
+* Complete direct uploads to S3 using presigned URLs for medical records.
+* Standardize configuration environments and conduct end-to-end testing.
+
+**Phase 3: System Expansion**
+
+* Add background processing for heavy or asynchronous tasks.
+* Integrate monitoring, alerting, and logging for a production-ready environment.
+* Optimize costs using lifecycle policies and data tiering for long-term storage.
+
+## 6. Budget Estimation
+
+The image below outlines the monthly cost estimation for the Smart Healthcare Appointment System aggregated from the AWS Pricing Calculator and exported on June 20, 2026:
+
+![alt text](/images/2-Proposal/uoctinh.png)
+
+| Category | Estimated Monthly Cost (USD) | Notes |
+| :--- | :---: | :--- |
+| **RDS PostgreSQL Multi-AZ** | **85.50** | Largest cost driver due to high availability priority |
+| **EC2 Server (t4g.micro x2)** | **19.51** | Two application servers across two AZs |
+| **Application Load Balancer** | **18.98** | Traffic distribution and unified entry point |
+| **NAT Instance (t4g.nano)** | **4.64** | Supports outbound traffic for private subnets |
+| **ElastiCache for Redis** | **7.50** | Data caching and query performance optimization |
+| **Others (CloudWatch, SQS, SNS)** | **5.07** | Costs for monitoring, logging, and async processing |
+| **Total** | **141.20** | Reference cost for the directional architecture |
+
+The estimated cost above fits a production-oriented or complete demo architecture rather than a minimal learning environment setup. For the internship or experimentation phase, the team can reduce costs via:
+
+* Using a single-AZ configuration for dev/test environments before requiring high availability.
+* Shutting down or downsizing EC2 instances when continuous execution isn't required.
+* Leveraging S3 lifecycle rules to transition infrequently accessed data to Glacier.
+* Enabling detailed CloudWatch logs only for components requiring active tracking.
+* Utilizing IAM Roles and S3 Gateway Endpoints to reduce misconfiguration risks instead of hard-coding access keys.
+
+## 7. Risk Assessment
+
+| Risk | Impact | Mitigation Strategy |
+| :--- | :--- | :--- |
+| **Misalignment between frontend, backend, and presigned URL flow** | Upload failures, out-of-sync health record data | Standardize API contracts, test incrementally, and perform end-to-end testing before demo |
+| **Inconsistent or poorly-reviewed appointment/patient metadata** | Inefficient search, cluttered appointment management | Define mandatory metadata, add review statuses, and establish admin/doctor review workflows |
+| **Insecure AWS access permission configurations** | Medical data leaks or unauthorized privilege escalation | Apply IAM Roles, Principle of Least Privilege, and avoid hard-coding keys in source code |
+| **Cost inflation from maintaining a large architecture for dev** | Budget waste when systems lack real user loads | Separate dev/demo environments, scale down resources, and monitor costs periodically |
+| **Lack of operational visibility during system failures** | Difficulty detecting and handling appointment outages promptly | Set up metrics, logs, CloudWatch Alarms, and SNS notifications for critical endpoints |
+| **Internship scope insufficient to complete the entire architecture** | Reports prone to being perceived as overclaims | Clearly distinguish completed work from future directions illustrated via roadmap |
+
+## 8. Expected Results
+
+Smart Healthcare Appointment System delivers value across three dimensions:
+
+* **For End Users:** Patients and doctors get a centralized platform to book appointments and manage medical records more quickly, intuitively, and reliably.
+* **For the Development Team:** The project tightly integrates frontend, backend, metadata design, and cloud architecture thinking into a single complete product.
+* **For Learning Direction:** The project serves as a bridge between UI/UX, real-world healthcare business logic, and secure AWS system deployment.
+
+From a personal perspective, this proposal reflects my transition from thinking about UI aesthetics to ensuring design experiences go hand-in-hand with data flow, security, cost, and operational management. That is the greatest learning value Smart Healthcare Appointment System has brought me during this internship.
