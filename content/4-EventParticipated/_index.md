@@ -16,3 +16,4 @@ During the internship, I participated in 1 event, with each event being a memora
 * **Role in the Event:** Attendee
 
 
+![alt text](/images/4-EventParticipated/event.jpg)

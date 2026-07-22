@@ -5,27 +5,78 @@ weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
+# TRANSLATED BLOG POSTS
 
-# SESSION POLICIES IN AMAZON EKS POD IDENTITY
+During my participation in the FCAJ program, I not only worked on the **Smart Healthcare Appointment System** project but also spent time reading, translating, and synthesizing English technical articles. This learning part helps me practice reading original documentation, interpreting it into Vietnamese, and directly relating it to the system architecture tasks currently underway.
 
-Amazon EKS Pod Identity has recently added the session policies feature, allowing you to narrow IAM permissions flexibly and precisely for each pod without needing to create many separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+Below is my second blog post, focusing on exploring Event-Driven architecture with Amazon SQS and AWS Lambda:
 
-Key points to know:
+## Blog 2: AWS Architecture Blog | What I Learned About Event-Driven Architecture with Amazon SQS and AWS Lambda
 
-* A session policy is an inline IAM policy specified when creating or updating a Pod Identity association.
-* Effective permissions = intersection between the IAM role permissions and the session policy → the session policy can only narrow permissions, not expand them.
-* Helps avoid over-permissioning when reusing a single IAM role for multiple workloads with different needs.
-* Supports both same-account and cross-account (via IAM role chaining).
-* Significantly reduces the number of IAM roles that need to be managed, helping avoid hitting IAM quota limits in large clusters.
-* Easily configured through the AWS Management Console, AWS CLI, or AWS SDK when creating an association between a Kubernetes ServiceAccount and an IAM role.
+Hello everyone,
 
-This feature is especially useful when you have many applications running on the same IAM role but need different permission restrictions (for example: one pod only reads a specific S3 bucket, another pod only calls certain APIs).
+While exploring AWS, I realized that not every request from users needs to be processed immediately. If all requests are handled directly by the backend, the system is very prone to overloading when traffic spikes.
 
-...Image...
+What I learned is that AWS provides an effective solution by combining **Amazon SQS**, **AWS Lambda**, and **Amazon CloudWatch** to build an **Event-Driven** architecture, making the system flexible, stable, and scalable.
 
-...Link...
+The second blog post I chose to translate revolves around a very practical problem in distributed architecture design: how to handle asynchronous requests, relieve backend load, and ensure the system does not crash during traffic surges. Instead of processing every request immediately, an Event-Driven architecture combined with message queues helps services operate flexibly, stably, and automates the processing workflow.
 
-...Guide...
+The article from AWS introduces how to combine **Amazon API Gateway**, **Amazon SQS**, **AWS Lambda**, and **Amazon CloudWatch** to build this model. This is an important approach to optimize performance, reduce operational costs, and enhance availability for cloud applications.
+
+## 1. Solution Overview
+
+The architecture described in the article uses:
+
+* **Amazon API Gateway** to receive requests from clients and route data into the message queue.
+* **Amazon SQS** as a message queue to store messages in order while waiting for processing.
+* **AWS Lambda** to process data automatically using a serverless model.
+* **Amazon DynamoDB** as the backend database to store results.
+* Additionally, **Amazon CloudWatch** is used for system monitoring, and **Amazon SNS** sends alerts when incidents occur.
+
+A notable point is that the system completely decouples the request-receiving component from the business logic component, preventing bottlenecks when a large number of requests arrive simultaneously.
+
+## 2. How Event-Driven Architecture Works
+
+Instead of synchronous direct processing, event-driven architecture allows components to communicate via messages:
+
+* Users send requests through API Gateway.
+* API Gateway pushes requests into the Amazon SQS queue instead of calling the backend directly.
+* SQS stores messages securely and distributes them one by one to Lambda.
+* AWS Lambda triggers automatically to process each message without server management.
+* Processing results are saved to the database or logged on CloudWatch.
+
+This approach directly reduces backend load, prevents overloading, and ensures no data loss during traffic spikes.
+
+## 3. Main Processing Flow
+
+From the content of the article, I summarize the operational flow as follows:
+
+1. Client sends a request to Amazon API Gateway.
+2. API Gateway forwards the request to the Amazon SQS queue.
+3. Amazon SQS stores messages in order and triggers AWS Lambda.
+4. AWS Lambda processes the data and saves it to the backend database.
+5. Amazon CloudWatch collects logs, metrics, and sends alerts via Amazon SNS if errors or anomalies are detected.
+
+In this model, service decoupling increases isolation, meaning if one component fails, the rest of the system can still operate normally.
+
+## 4. What I Learned from the Blog Post
+
+This article drew my attention more to designing background tasks and asynchronous processing in large-scale systems. Working with infrastructure and the backend, I found Event-Driven architecture with SQS and Lambda very useful for problems such as:
+
+* Handling heavy background jobs like sending emails or generating reports.
+* Receiving a high volume of medical appointment registration requests without crashing the server.
+* Synchronizing data securely between microservices.
+
+Even when the system has not yet adopted the entire complex model, understanding event-driven thinking helps me design data processing pipelines that handle loads better.
+
+## 5. Connection to Smart Healthcare Appointment System
+
+* **Smart Healthcare Appointment System** can adopt the SQS queue to handle peak appointment booking traffic, avoiding system congestion.
+* Using AWS Lambda for background processing tasks optimizes costs since you only pay for actual code execution time.
+* Integrating CloudWatch helps closely monitor performance and detect issues early during the operation of the healthcare system.
+
+## 6. Conclusion
+
+Event-Driven architecture with Amazon SQS and AWS Lambda is becoming a core solution for building high-load distributed systems. Applying this model helps minimize latency, increases scalability, and ensures absolute stability for modern applications.
+
+ FCAJ group post link: [https://www.facebook.com/groups/awsstudygroupfcj/permalink/2219595365472090/](https://www.facebook.com/groups/awsstudygroupfcj/permalink/2219595365472090/)

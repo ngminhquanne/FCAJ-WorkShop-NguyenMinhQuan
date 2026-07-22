@@ -16,3 +16,6 @@ Trong quá trình thực tập, em đã tham gia 1 events, với mỗi event là
 * **Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
 * **Vai trò trong sự kiện:** Người tham dự
 
+
+![alt text](/images/4-EventParticipated/event.jpg)
+

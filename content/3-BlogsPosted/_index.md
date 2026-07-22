@@ -6,17 +6,23 @@ chapter: false
 pre: " <b> 3. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
-This section will list and introduce the blogs you have posted to [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj). For example:
 
-###  [Blog 1 - SESSION POLICIES IN AMAZON EKS POD IDENTITY](3.1-Blog1/)
-This blog introduces the newly added session policies feature in Amazon EKS Pod Identity, which allows you to narrow IAM permissions flexibly and precisely for each pod without needing to create multiple separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+During my participation in the FCAJ program, I not only worked on the **Smart Healthcare Appointment System** project but also spent time reading, translating, and synthesizing technical blog posts in English related to AWS Amplify, GenAI, access control security, and user experience in modern applications. This has been an essential learning phase, helping me practice reading original documentation, interpreting technical concepts into Vietnamese, and connecting this knowledge directly to my project.
 
-###  [Blog 2 - ...](3.2-Blog2/)
-This blog introduces the newly added session policies feature in Amazon EKS Pod Identity, which allows you to narrow IAM permissions flexibly and precisely for each pod without needing to create multiple separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+The three blog posts I chose during this period align closely with the focus of **Smart Healthcare Appointment System**: user experience under unstable network conditions, integrating AI with internal data, and securely accessing AWS resources without hard-coding credentials. These insights not only broaden my cloud knowledge but also inspire many ideas that can be applied to **Smart Healthcare Appointment System** moving forward.
 
-###  [Blog 3 - ...](3.3-Blog3/)
-This blog introduces the newly added session policies feature in Amazon EKS Pod Identity, which allows you to narrow IAM permissions flexibly and precisely for each pod without needing to create multiple separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+## Objectives of the Blog Translation Section
+
+* Practice reading and understanding technical documentation directly from official AWS sources.
+* Expand knowledge on modern application architectures, GenAI, and cloud security.
+* Interpret technical concepts clearly and concisely in Vietnamese.
+* Build a habit of learning through official technical blogs rather than relying solely on summaries.
+
+## Value Gained
+
+Through translating these three articles, I have noticed significant improvement in my ability to quickly grasp key concepts, identify core architectural elements, and relate them to practical work. Working on frontend development and supporting backend tasks in **Smart Healthcare Appointment System**, reading these technical blogs helped me realize that a great user experience is always deeply connected to data flow, access security, and backend system organization.
+
+* [Blog 1](3.1-Blog1/) : Amazon VPC – The Foundation of Every Architecture on AWS
+* [Blog 2](3.2-Blog2/) : Event-Driven Architecture with Amazon SQS and AWS Lambda
+* [Blog 3](3.3-Blog3/) : This blog introduces Amazon EKS Pod Identity with the newly added session policies feature, allowing you to flexibly and precisely narrow down IAM permissions for individual pods without creating multiple separate IAM roles. This is an important step forward in applying the principle of least privilege effectively in large-scale Kubernetes environments.
